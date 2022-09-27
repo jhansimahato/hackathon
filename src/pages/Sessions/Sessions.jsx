@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../../components/Header/Header'
 import './Sessions.scss'
 import SessionsTable from '../../components/SessionsTable/SessionsTable'
+import SessionHeader from '../../components/SessionHeader/SessionHeader'
 
 const Sessions = () => {
   const customData = [
@@ -123,7 +123,7 @@ const Sessions = () => {
   return (
     <div className='student'>
         <div className='studentContainer'>
-            <Header heading="SESSIONS" data={customData}/>
+            <SessionHeader heading="SESSIONS" data={customData}/>
             <div className='data-table'>
               <SessionsTable data={customData}/>
             </div>
