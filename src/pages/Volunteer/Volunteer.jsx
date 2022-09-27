@@ -5,6 +5,7 @@ import VolunteerTable from '../../components/VolunteerTable/VolunteerTable';
 import './Volunteer.scss';
 import { useState } from 'react';
 import {Modal,Input} from 'antd';
+import Navbar from '../../components/Navbar/Navbar';
 
 const Volunteer = () => {
   const [add,setAdd] = useState(false);
@@ -130,6 +131,7 @@ const Volunteer = () => {
   return (
     <div className='volunteer'>
         <div className='volunteerContainer'>
+          <Navbar/>
             <Header heading="VOLUNTEER" data={customData}  onAdd={addModalHandler}/>
             <div className='data-table'>
               <VolunteerTable data={customData}/>

@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header'
 import MentorTable from '../../components/MentorTable/MentorTable'
 import {Modal,Input} from 'antd';
 import {useState} from 'react'
+import Navbar from '../../components/Navbar/Navbar';
 
 
 const Mentor = () => {
@@ -130,6 +131,7 @@ const Mentor = () => {
   return (
     <div className='mentor'>
         <div className='mentorContainer'>
+            <Navbar/>
             <Header heading="MENTOR" data={customData} onAdd={addModalHandler}/>
             <div className='data-table'>
               <MentorTable data={customData}/>

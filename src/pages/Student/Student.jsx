@@ -4,6 +4,7 @@ import StudentTable from '../../components/StudentTable/StudentTable'
 import './Student.scss'
 import {Modal,Input} from 'antd';
 import {useState} from 'react'
+import Navbar from '../../components/Navbar/Navbar';
 
 const Student = () => {
   const [add,setAdd] = useState(false);
@@ -144,6 +145,7 @@ const Student = () => {
   return (
     <div className='student'>
         <div className='studentContainer'>
+          <Navbar/>
             <Header heading="STUDENT" data={customData} onAdd={addModalHandler}/>
             <div className='data-table'>
               <StudentTable data={customData}/>
