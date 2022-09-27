@@ -1,10 +1,11 @@
 import './SessionsTable.scss'
 import React from 'react'
 import {useState} from 'react'
-import {Table,Modal} from 'antd'
+import {Table,Modal, Space} from 'antd'
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
+import {Link} from 'react-router-dom'
 
 
 
@@ -22,7 +23,15 @@ const SessionsTable = (props) => {
         {
             title:'Id',
             dataIndex:'id',
-            align:'left'
+            align:'left',
+            render:(_,record) => {
+                const url = '/'+record.id+'/sessionreview/';
+                return<>
+                <Space size='middle'>
+                    <Link to={url}>{record.id}</Link>
+                </Space>
+                </>
+            }
         },
         {
             title:'Locality',

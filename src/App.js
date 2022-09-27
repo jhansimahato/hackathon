@@ -5,6 +5,8 @@ import Student from "./pages/Student/Student";
 import Volunteer from "./pages/Volunteer/Volunteer";
 import Mentor from "./pages/Mentor/Mentor";
 import Sessions from "./pages/Sessions/Sessions";
+import Donor from "./pages/Donor/Donor";
+import Review from "./pages/Review/Review";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route exact path="/volunteer" element={<Volunteer />} />
           <Route exact path="/mentor" element={<Mentor />} />
           <Route exact path="/sessions" element={<Sessions />} />
+          <Route exact path="/donors" element={<Donor />} />
+          <Route exact path=":id/sessionreview" element={<Review />} />
         </Routes>
       </BrowserRouter>
     </div>
