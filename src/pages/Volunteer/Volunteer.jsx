@@ -1,16 +1,55 @@
 
-import React from 'react';
 import Header from '../../components/Header/Header';
 import VolunteerTable from '../../components/VolunteerTable/VolunteerTable';
 import './Volunteer.scss';
-import { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import {Modal,Input} from 'antd';
 import Navbar from '../../components/Navbar/Navbar';
+import { isEmpty } from 'lodash';
+import { auth, db } from "../../context/firebase";
 
 const Volunteer = () => {
   const [add,setAdd] = useState(false);
   const [addData,setAddData] = useState([]);
+  const [voldet, setvoldet] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
+  const [modifiedData,setModifiedData] = useState([]);
   
+  useEffect(() => {
+
+    setisLoading(true);
+   var unsubscribe =  db.collection('Volunteer')
+   .onSnapshot((snapshot) => {
+                
+                  setvoldet(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        data: doc.data(),
+                    }))
+                  )  
+            });
+
+  }, []);
+  useEffect(() => {
+    if(voldet.length)
+    {
+      setisLoading(false);
+      const modifiedData = voldet.map(({volunteerId,name,location,mobile,sessions,...item})=>({
+ 
+       generatedUid:item.id,
+       name: isEmpty(name)?(item.data.name):name,
+       mobile: isEmpty(mobile)?item.data.mobile:mobile,
+       location: isEmpty(location)?(item.data.location):location,
+       volunteerId: isEmpty(volunteerId)?(item.data.volunteerId):volunteerId,
+       sessions: isEmpty(sessions)?(item.data.sessions.length):sessions,
+       
+    }));
+    console.log(modifiedData);
+    setModifiedData(modifiedData);
+ 
+    }
+ 
+   }, [voldet]);
   const addModalHandler = () => {
     setAdd(!add);
   }
@@ -134,7 +173,7 @@ const Volunteer = () => {
           <Navbar/>
             <Header heading="VOLUNTEER" data={customData}  onAdd={addModalHandler}/>
             <div className='data-table'>
-              <VolunteerTable data={customData}/>
+              <VolunteerTable data={modifiedData}/>
             </div>
         </div>
 

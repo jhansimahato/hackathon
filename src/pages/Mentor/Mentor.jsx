@@ -1,17 +1,58 @@
 import './mentor.scss'
 
-import React from 'react'
-import Header from '../../components/Header/Header'
+import React, { useState, useEffect } from "react";
+
+import MentorHeader from '../../components/MentorHeader/MentorHeader';
 import MentorTable from '../../components/MentorTable/MentorTable'
 import {Modal,Input} from 'antd';
-import {useState} from 'react'
 import Navbar from '../../components/Navbar/Navbar';
+import { auth, db } from "../../context/firebase";
+import { isEmpty } from 'lodash';
+
 
 
 const Mentor = () => {
   const [add,setAdd] = useState(false);
   const [addData,setAddData] = useState([]);
+  const [mentordet, setmentordet] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
+  const [modifiedData,setModifiedData] = useState([]);
   
+  useEffect(() => {
+
+    setisLoading(true);
+   var unsubscribe =  db.collection('Mentor')
+   .onSnapshot((snapshot) => {
+                
+                  setmentordet(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        data: doc.data(),
+                    }))
+                  )  
+            });
+
+  }, []);
+  useEffect(() => {
+   if(mentordet.length)
+   {
+     setisLoading(false);
+     const modifiedData = mentordet.map(({mentorId,name,city,mobile,email,...item})=>({
+
+      generatedUid:item.id,
+      name: isEmpty(name)?(item.data.name):name,
+      mobile: isEmpty(mobile)?item.data.mobile:mobile,
+      email: isEmpty(email)?(item.data.email):email,
+      location: isEmpty(city)?(item.data.city):city,
+      mentorId: isEmpty(mentorId)?(item.data.mentorId):mentorId,
+      
+   }));
+   console.log(modifiedData);
+   setModifiedData(modifiedData);
+
+   }
+
+  }, [mentordet]);
   const addModalHandler = () => {
     setAdd(!add);
   }
@@ -26,6 +67,8 @@ const Mentor = () => {
     setAdd(false);
     setAddData(null)
   }
+
+
   const customData = [
     {
       id:'1',
@@ -126,15 +169,15 @@ const Mentor = () => {
       email:'helloworld@gmail.com'
     },
 
-
   ];
   return (
+    
     <div className='mentor'>
         <div className='mentorContainer'>
             <Navbar/>
-            <Header heading="MENTOR" data={customData} onAdd={addModalHandler}/>
+            <MentorHeader heading="MENTOR" data={customData} onAdd={addModalHandler}/>
             <div className='data-table'>
-              <MentorTable data={customData}/>
+              <MentorTable data={modifiedData} loading={isLoading}/>
             </div>
         </div>
 

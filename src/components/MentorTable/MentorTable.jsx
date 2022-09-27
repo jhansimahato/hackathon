@@ -5,12 +5,12 @@ import {Table,Modal,Input} from 'antd'
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
+import { db } from '../../context/firebase';
 
 
 
 const MentorTable = (props) => {
 
-    const [isLoading,SetIsLoading] = useState(false);
     const [add,setAdd] = useState(false);
     const [edit,setEdit] = useState(false);
     const [editData,setEditData] = useState([]);
@@ -26,20 +26,24 @@ const MentorTable = (props) => {
 
     const editHandler = () => {
         setEdit(false);
+        console.log(editData);
+        db.collection('Mentor').doc(editData.generatedUid).update(editData);
         setEditData(null);
     }
 
     const editModalHandler = (record) => {
         setEdit(!edit);
+        console.log(record)
         setEditData(record);
     }
 
     const handleDelete =(id) => {
+      console.log(id);
         Modal.confirm({
           title:'Are you sure, you want to delete this record',
           okType:"danger",
           onOk: ()=>{
-           
+           db.collection('Mentor').doc(id.generatedUid).delete();
           },
           cancelText:"No",
           okText:'Yes'
@@ -50,7 +54,7 @@ const MentorTable = (props) => {
     const columns = [
         {
             title:'Id',
-            dataIndex:'id',
+            dataIndex:'mentorId',
             align:'left'
         },
         {
@@ -60,12 +64,12 @@ const MentorTable = (props) => {
         },
         {
             title:'Locality',
-            dataIndex:'locality',
+            dataIndex:'location',
             align:'left'
         },
         {
             title:'Phone Number',
-            dataIndex:'phone_no',
+            dataIndex:'mobile',
             align:'left'
         },
         {
@@ -93,7 +97,7 @@ const MentorTable = (props) => {
          pagination={{pageSize:15}}
          columns={columns}
          dataSource={props.data}
-         loading={isLoading}
+         loading={props.loading}
          mobileBreakPoint={768}
          showHeader={true}
          style={{flex:1,minWidth:100}}
@@ -117,18 +121,18 @@ const MentorTable = (props) => {
         }}/>
         </div>  
         <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
-        <label htmlFor="locality"  className="label" style={{width:'25%'}}>Locality:</label>
-        <Input value={editData?.locality} style={{width:'75%'}}onChange={(e) => {
+        <label htmlFor="location"  className="label" style={{width:'25%'}}>Locality:</label>
+        <Input value={editData?.location} style={{width:'75%'}}onChange={(e) => {
           setEditData((pre) => {
-            return {...pre,locality: e.target.value};
+            return {...pre,location: e.target.value};
           })
         }}/>
         </div>
         <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
-        <label htmlFor="phone_no"  className="label" style={{width:'25%'}}>Phone no:</label>
-        <Input value={editData?.phone_no} style={{width:'75%'}} onChange={(e) => {
+        <label htmlFor="mobile"  className="label" style={{width:'25%'}}>Phone no:</label>
+        <Input value={editData?.mobile} style={{width:'75%'}} onChange={(e) => {
           setEditData((pre) => {
-            return {...pre,phone_no: e.target.value};
+            return {...pre,mobile: e.target.value};
           })
         }}/>
         </div>

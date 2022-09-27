@@ -1,14 +1,83 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import Header from '../../components/Header/Header'
 import StudentTable from '../../components/StudentTable/StudentTable'
 import './Student.scss'
 import {Modal,Input} from 'antd';
-import {useState} from 'react'
+
 import Navbar from '../../components/Navbar/Navbar';
+import { isEmpty } from 'lodash';
+import { auth, db } from "../../context/firebase";
 
 const Student = () => {
   const [add,setAdd] = useState(false);
   const [addData,setAddData] = useState([]);
+  const [studdet, setstuddet] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
+  const [modifiedData,setModifiedData] = useState([]);
+  const [stud_att, setstud_att] = useState(new Map());
+  
+  useEffect(() => {
+
+    setisLoading(true);
+   var unsubscribe =  db.collection('Student')
+   .onSnapshot((snapshot) => {
+                
+                  setstuddet(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        data: doc.data(),
+                    }))
+                  )  
+            });
+
+  }, []);
+  useEffect(() => {
+   if(studdet.length)
+   {
+    const today = new Date();
+    const upper_d =  today.toDateString();
+    console.log(today);
+    const priorDate = new Date().setDate(today.getDate() - 30)
+    const lower_d = new Date(priorDate).toDateString(); 
+    console.log(new Date(priorDate));
+    studdet.map((arr)=>{
+      let tot_sess = 0;
+      let att_sess = 0;
+      arr.data.sessions.map((d)=>{
+
+        if(new Date(d.date.seconds*1000).getTime() <= today.getTime() && new Date(d.date.seconds*1000).getTime() >= new Date(priorDate).getTime())
+        {
+          tot_sess++;
+          if(d.present)
+          att_sess++;
+        }
+      })
+      if(tot_sess== 0)
+      setstud_att(stud_att.set(arr.id,"NA"));
+      else
+      setstud_att(stud_att.set(arr.id,(((att_sess/tot_sess)*100)).toFixed(2)));
+
+    }) 
+
+     setisLoading(false);
+     const modifiedData = studdet.map(({studentId,name,location,mobile,className,attendance,...item})=>({
+
+      generatedUid:item.id,
+      name: isEmpty(name)?(item.data.name):name,
+      mobile: isEmpty(mobile)?item.data.mobile:mobile,
+      className: isEmpty(className)?(item.data.className):className,
+      location: isEmpty(location)?(item.data.location):location,
+      studentId: isEmpty(studentId)?(item.data.studentId):studentId,
+      attendance: isEmpty(attendance)? stud_att.get(item.id):attendance,
+      
+   }));
+   console.log(modifiedData);
+
+   setModifiedData(modifiedData);
+
+   }
+
+  }, [studdet]);
   
   const addModalHandler = () => {
     setAdd(!add);
@@ -148,7 +217,7 @@ const Student = () => {
           <Navbar/>
             <Header heading="STUDENT" data={customData} onAdd={addModalHandler}/>
             <div className='data-table'>
-              <StudentTable data={customData}/>
+              <StudentTable data={modifiedData}/>
             </div>
         </div>
 

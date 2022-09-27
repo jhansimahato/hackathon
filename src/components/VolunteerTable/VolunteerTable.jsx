@@ -5,6 +5,7 @@ import {Table,Modal,Input} from 'antd'
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
+import { db } from '../../context/firebase';
 
 
 
@@ -24,6 +25,8 @@ const VolunteerTable = (props) => {
 
     const editHandler = () => {
         setEdit(false);
+        console.log(editData)
+        db.collection('Volunteer').doc(editData.generatedUid).update(editData);
         setEditData(null);
     }
 
@@ -37,7 +40,7 @@ const VolunteerTable = (props) => {
           title:'Are you sure, you want to delete this record',
           okType:"danger",
           onOk: ()=>{
-           
+            db.collection('Volunteer').doc(id.generatedUid).delete();
           },
           cancelText:"No",
           okText:'Yes'
@@ -48,7 +51,7 @@ const VolunteerTable = (props) => {
     const columns = [
         {
             title:'Id',
-            dataIndex:'id',
+            dataIndex:'volunteerId',
             align:'left'
         },
         {
@@ -58,17 +61,17 @@ const VolunteerTable = (props) => {
         },
         {
             title:'Locality',
-            dataIndex:'locality',
+            dataIndex:'location',
             align:'left'
         },
         {
             title:'Phone Number',
-            dataIndex:'phone_no',
+            dataIndex:'mobile',
             align:'left'
         },
         {
-            title:'Attendance',
-            dataIndex:'attendance',
+            title:'Sessions Taken',
+            dataIndex:'sessions',
             align:'right'
         },
         {
@@ -77,7 +80,7 @@ const VolunteerTable = (props) => {
             align:'center',
             render:(_,record)=>{
                 return<>
-                <AiFillEye style={{fontSize:'25px',marginRight:'6%'}}  />
+                
                 <AiFillEdit style={{fontSize:'25px',marginRight:'6%'}}  onClick={()=>editModalHandler(record)}/>
                 <AiFillDelete  style={{fontSize:'25px'}}  onClick={()=>handleDelete(record)}/>
                 </>
@@ -117,18 +120,18 @@ const VolunteerTable = (props) => {
         </div> 
 
         <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
-        <label htmlFor="locality"  className="label" style={{width:'25%'}}>Locality:</label>
-        <Input value={editData?.locality} style={{width:'75%'}}onChange={(e) => {
+        <label htmlFor="location"  className="label" style={{width:'25%'}}>Locality:</label>
+        <Input value={editData?.location} style={{width:'75%'}}onChange={(e) => {
           setEditData((pre) => {
-            return {...pre,locality: e.target.value};
+            return {...pre,location: e.target.value};
           })
         }}/>
         </div>
         <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
-        <label htmlFor="phone_no"  className="label" style={{width:'25%'}}>Phone no:</label>
-        <Input value={editData?.phone_no} style={{width:'75%'}} onChange={(e) => {
+        <label htmlFor="mobile"  className="label" style={{width:'25%'}}>Phone no:</label>
+        <Input value={editData?.mobile} style={{width:'75%'}} onChange={(e) => {
           setEditData((pre) => {
-            return {...pre,phone_no: e.target.value};
+            return {...pre,mobile: e.target.value};
           })
         }}/>
         </div>

@@ -5,6 +5,7 @@ import { AiFillEdit } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
 import './studentable.scss'
+import { db } from '../../context/firebase';
 
 
 
@@ -30,8 +31,11 @@ const StudentTable = (props) => {
     }
 
     const EditHandler = (record) => {
-        
-
+      setEdit(false);
+      console.log(record);
+      console.log("Hello");
+      db.collection('Student').doc(editData.generatedUid).update(editData);
+      setEditData(null);
     }
 
     const handleDelete =(id) => {
@@ -39,7 +43,7 @@ const StudentTable = (props) => {
           title:'Are you sure, you want to delete this record',
           okType:"danger",
           onOk: ()=>{
-           
+            db.collection('Student').doc(id.generatedUid).delete();
           },
           cancelText:"No",
           okText:'Yes'
@@ -51,7 +55,7 @@ const StudentTable = (props) => {
     const columns = [
         {
             title:'Id',
-            dataIndex:'id',
+            dataIndex:'studentId',
             align:'left'
         },
         {
@@ -61,21 +65,21 @@ const StudentTable = (props) => {
         },
         {
             title:'Locality',
-            dataIndex:'locality',
+            dataIndex:'location',
             align:'left'
         },
         {
             title:'Phone Number',
-            dataIndex:'phone_no',
+            dataIndex:'mobile',
             align:'left'
         },
         {
             title:"Class",
-            dataIndex:'class',
+            dataIndex:'className',
             align:'left'
         },
         {
-            title:'Attendance',
+            title:'Attendance (%)',
             dataIndex:'attendance',
             align:'right'
         },
@@ -85,7 +89,7 @@ const StudentTable = (props) => {
             align:'center',
             render:(_,record)=>{
                 return<>
-                <AiFillEye style={{fontSize:'25px',marginRight:'6%'}}/>
+                
                 <AiFillEdit style={{fontSize:'25px',marginRight:'6%'}} onClick={()=>editModalHandler(record)}/>
                 <AiFillDelete  style={{fontSize:'25px'}} onClick={()=>handleDelete(record)}/>
                 </>
@@ -112,7 +116,7 @@ const StudentTable = (props) => {
             onCancel= {()=>{
               resetEditHandler();
             }}
-            onOK={()=>{EditHandler()}}
+            onOk={()=>{EditHandler()}}
             okText="Save"
             style={{width:"100px"}}
             >
@@ -125,27 +129,27 @@ const StudentTable = (props) => {
         }}/>
         </div>
         <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
-        <label htmlFor="locality"  className="label" style={{width:'25%'}}>Locality:</label>
-        <Input value={editData?.locality} style={{width:'75%'}}onChange={(e) => {
+        <label htmlFor="location"  className="label" style={{width:'25%'}}>Locality:</label>
+        <Input value={editData?.location} style={{width:'75%'}}onChange={(e) => {
           setEditData((pre) => {
-            return {...pre,locality: e.target.value};
+            return {...pre,location: e.target.value};
           })
         }}/>
         </div>
          <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
-        <label htmlFor="phone_no"  className="label" style={{width:'25%'}}>Phone no:</label>
-        <Input value={editData?.phone_no} style={{width:'75%'}} onChange={(e) => {
+        <label htmlFor="mobile"  className="label" style={{width:'25%'}}>Phone no:</label>
+        <Input value={editData?.mobile} style={{width:'75%'}} onChange={(e) => {
           setEditData((pre) => {
-            return {...pre,phone_no: e.target.value};
+            return {...pre,mobile: e.target.value};
           })
         }}/>
         </div>
 
         <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
-        <label htmlFor="class"  className="label" style={{width:'25%'}}>class:</label>
-        <Input value={editData?.class} style={{width:'75%'}} onChange={(e) => {
+        <label htmlFor="className"  className="label" style={{width:'25%'}}>Class:</label>
+        <Input value={editData?.className} style={{width:'75%'}} onChange={(e) => {
           setEditData((pre) => {
-            return {...pre,class: e.target.value};
+            return {...pre,className: e.target.value};
           })
         }}/>
         </div>

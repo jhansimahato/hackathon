@@ -1,0 +1,25 @@
+.listContainer{
+        display: flex;
+        // flex: 2;
+        // padding: 20px;
+        // border: 1px solid red;
+       
+       justify-content: center;
+       align-items: center;
+    .list{
+        
+        border-radius: 2px;
+        padding: 8px;
+        text-align: center;
+        margin-bottom: 8px;
+        border-bottom: 1px solid rgba(150, 149, 149, 0.325);
+        border-top: 1px solid rgba(150, 150, 150, 0.389);
+        width: 80%;
+    }
+
+    .name{
+        font-size: 20px;
+        color:rgb(48, 48, 48)
+    }
+
+}
