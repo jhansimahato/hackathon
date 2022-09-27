@@ -1,0 +1,12 @@
+.sessions{
+    display: flex;
+
+    .sessionContainer{
+        background-color: rgb(241,243,246);
+        flex:2;
+
+        .data-table{
+            display: flex;
+        }
+    }
+}
