@@ -215,7 +215,7 @@ const Student = () => {
     <div className='student'>
         <div className='studentContainer'>
           <Navbar/>
-            <Header heading="STUDENT" data={customData} onAdd={addModalHandler}/>
+            <Header heading="STUDENT" data={modifiedData} onAdd={addModalHandler}/>
             <div className='data-table'>
               <StudentTable data={modifiedData}/>
             </div>

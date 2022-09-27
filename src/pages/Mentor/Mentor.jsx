@@ -175,7 +175,7 @@ const Mentor = () => {
     <div className='mentor'>
         <div className='mentorContainer'>
             <Navbar/>
-            <MentorHeader heading="MENTOR" data={customData} onAdd={addModalHandler}/>
+            <MentorHeader heading="MENTOR" data={modifiedData} onAdd={addModalHandler}/>
             <div className='data-table'>
               <MentorTable data={modifiedData} loading={isLoading}/>
             </div>

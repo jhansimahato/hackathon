@@ -186,7 +186,7 @@ const Review = () => {
     <div className='review'>
         <div className='reviewContainer'>
           <Navbar/>
-            <SessionHeader heading="REVIEWS" data={customData}/>
+            <SessionHeader heading="REVIEWS" data={modifiedData}/>
             <div className='data-table'>
               <ReviewTable data={modifiedData} loading={isLoading}/>
             </div>

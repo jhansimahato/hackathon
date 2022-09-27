@@ -167,7 +167,7 @@ const Sessions = () => {
     <div className='student'>
         <div className='studentContainer'>
             <Navbar/>
-            <SessionHeader heading="SESSIONS" data={customData}/>
+            <SessionHeader heading="SESSIONS" data={modifiedData}/>
             <div className='data-table'>
               <SessionsTable data={modifiedData}/>
             </div>

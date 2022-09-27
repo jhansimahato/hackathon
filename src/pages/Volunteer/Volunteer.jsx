@@ -171,7 +171,7 @@ const Volunteer = () => {
     <div className='volunteer'>
         <div className='volunteerContainer'>
           <Navbar/>
-            <Header heading="VOLUNTEER" data={customData}  onAdd={addModalHandler}/>
+            <Header heading="VOLUNTEER" data={modifiedData}  onAdd={addModalHandler}/>
             <div className='data-table'>
               <VolunteerTable data={modifiedData}/>
             </div>
