@@ -31,13 +31,13 @@ const Sessions = () => {
     if(sesdet.length)
     {
       setisLoading(false);
-      const modifiedData = sesdet.map(({sessionId,city,className,attendedCount,noOfStudents,topic, ...item})=>({
+      const modifiedData = sesdet.map(({sessionId,city,className,noOfStudents,attendedCount,topic, ...item})=>({
  
-       sessionId: isEmpty(sessionId)?(item.data.sessionId):sessionId,
+       id: isEmpty(sessionId)?item.data.sessionId:sessionId,
        location: isEmpty(city)?item.data.city:city,
        className: isEmpty(className)?(item.data.class):className,
        noOfStudents: isEmpty(noOfStudents)?(item.data.noOfStudents):noOfStudents,
-       attendedCount: isEmpty(attendedCount)?(item.data.attendanceCount):attendedCount,
+       attendedCount: isEmpty(attendedCount)?(item.data.attendedCount):attendedCount,
        topic: isEmpty(topic)?(item.data.topic):topic
        
     }));

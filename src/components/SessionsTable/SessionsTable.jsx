@@ -22,7 +22,7 @@ const SessionsTable = (props) => {
     const columns = [
         {
             title:'Id',
-            dataIndex:'sessionId',
+            dataIndex:'id',
             align:'left',
             render:(_,record) => {
                 const url = '/'+record.id+'/sessionreview/';
@@ -45,7 +45,7 @@ const SessionsTable = (props) => {
         },
         {
             title:'Attendance Count',
-            dataIndex:'attendanceCount',
+            dataIndex:'attendedCount',
             align:'right'
         },
         {

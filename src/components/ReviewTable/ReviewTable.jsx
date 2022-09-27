@@ -9,7 +9,7 @@ const ReviewTable = (props) => {
     const columns = [
         {
             title:'Id',
-            dataIndex:'id',
+            dataIndex:'studentId',
             align:'left'
         },
         {
@@ -19,7 +19,7 @@ const ReviewTable = (props) => {
         },
         {
             title:"Class",
-            dataIndex:'class',
+            dataIndex:'className',
             align:'left'
         },
         {

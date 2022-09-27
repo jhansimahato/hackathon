@@ -8,31 +8,31 @@
 // }
 
 a {
-  text-decoration: none;
+  text-decoration: none!important;
 }
 li {
-  list-style-type: none;
+  list-style-type: none!important;
 }
 .navbar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 10vh;
-    background-color: white;
-  box-shadow: rgba(50, 50, 93, 0.23) 0px 30px 30px -20px;
+  display: flex!important;
+  justify-content: space-around!important;
+  align-items: center!important;
+  height: 13vh!important;
+    background-color: white!important;
+  box-shadow: rgba(50, 50, 93, 0.23) 0px 30px 30px -20px ;
 
   /*box-shadow: rgba(50, 50, 93, 0.23) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
 }
 .logoimg {
-  font-size: 10px;
+  font-size: 10px !important;
 //   border: 1px solid red;
-  position: relative;
-    left: -25px;
+  position: relative!important;
+    left: -25px!important;
     margin: 20px;
 }
 .nav-links {
-  display: flex;
-  justify-content: flex-end;
+  display: flex !important; 
+  justify-content: flex-end !important;
   width: 75%;
 }
 

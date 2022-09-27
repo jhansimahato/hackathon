@@ -6,6 +6,8 @@ import Chart from '../components/Charts/Charts';
 import Progress from '../components/LinearProg/LinearProg';
 import List from '../components/ListComponent/ListComponents';
 import { auth, db } from "../context/firebase";
+import Navbar from "../components/Navbar/Navbar";
+
 
 
 const Volunteers = [
@@ -171,7 +173,10 @@ const Home = () => {
         }, [sessions]);
         
     return (
+        <div>
+         <Navbar/>
         <div className="home">
+            
             <div className="homeContainer">
                 <div className="widgets">
                     <Widget title="Students Enrolled" link="view" count={stcount} icon=""/>
@@ -204,6 +209,7 @@ const Home = () => {
                 </div>
 
             </div>
+      </div>
       </div>
     );
   };
