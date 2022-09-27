@@ -9,6 +9,8 @@ import AddMentor from "./components/AddMentor";
 import AddDonor from "./components/AddDonor";
 import TrackDonation from "./components/TrackDonation";
 import Home from "./pages/home";
+import Donor from "./pages/Donor/Donor";
+import Review from "./pages/Review/Review";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route exact path="/addmentor" element={<AddMentor/>} />
             <Route exact path="/adddonor" element={<AddDonor/>} />
             <Route exact path="/trackdonation" element={<TrackDonation/>} />
+          <Route exact path="/donors" element={<Donor />} />
+          <Route exact path=":id/sessionreview" element={<Review />} />
         </Routes>
       </BrowserRouter>
     </div>
