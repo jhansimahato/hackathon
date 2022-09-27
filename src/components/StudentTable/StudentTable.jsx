@@ -20,7 +20,7 @@ const StudentTable = (props) => {
     }
 
     const editModalHandler = (record) => {
-        setEdit(true);
+        setEdit(!edit);
         setEditData(record);
     }
 
@@ -28,6 +28,25 @@ const StudentTable = (props) => {
         setEdit(false);
         setEditData(null);
     }
+
+    const EditHandler = (record) => {
+        
+
+    }
+
+    const handleDelete =(id) => {
+        Modal.confirm({
+          title:'Are you sure, you want to delete this record',
+          okType:"danger",
+          onOk: ()=>{
+           
+          },
+          cancelText:"No",
+          okText:'Yes'
+        });
+         
+      };
+    
     
     const columns = [
         {
@@ -67,8 +86,8 @@ const StudentTable = (props) => {
             render:(_,record)=>{
                 return<>
                 <AiFillEye style={{fontSize:'25px',marginRight:'6%'}}/>
-                <AiFillEdit style={{fontSize:'25px',marginRight:'6%'}} onClick={editModalHandler(record)}/>
-                <AiFillDelete  style={{fontSize:'25px'}}/>
+                <AiFillEdit style={{fontSize:'25px',marginRight:'6%'}} onClick={()=>editModalHandler(record)}/>
+                <AiFillDelete  style={{fontSize:'25px'}} onClick={()=>handleDelete(record)}/>
                 </>
             }
         }
@@ -93,18 +112,42 @@ const StudentTable = (props) => {
             onCancel= {()=>{
               resetEditHandler();
             }}
-            onOK={()=>{setEdit(false)}}
+            onOK={()=>{EditHandler()}}
             okText="Save"
             style={{width:"100px"}}
             >
-        <div className='textInput' style={{display:'flex'}}>
-        <label htmlFor="name"  className="label">Name:</label>
-        <Input value={editData?.name} style={{marginLeft:'2%'}}onChange={(e) => {
+        <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
+        <label htmlFor="name"  className="label" style={{width:'25%'}}>Name:</label>
+        <Input value={editData?.name} style={{width:'75%'}}onChange={(e) => {
           setEditData((pre) => {
             return {...pre,name: e.target.value};
           })
         }}/>
+        </div>
+        <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
+        <label htmlFor="locality"  className="label" style={{width:'25%'}}>Locality:</label>
+        <Input value={editData?.locality} style={{width:'75%'}}onChange={(e) => {
+          setEditData((pre) => {
+            return {...pre,locality: e.target.value};
+          })
+        }}/>
+        </div>
+         <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
+        <label htmlFor="phone_no"  className="label" style={{width:'25%'}}>Phone no:</label>
+        <Input value={editData?.phone_no} style={{width:'75%'}} onChange={(e) => {
+          setEditData((pre) => {
+            return {...pre,phone_no: e.target.value};
+          })
+        }}/>
+        </div>
 
+        <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
+        <label htmlFor="class"  className="label" style={{width:'25%'}}>class:</label>
+        <Input value={editData?.class} style={{width:'75%'}} onChange={(e) => {
+          setEditData((pre) => {
+            return {...pre,class: e.target.value};
+          })
+        }}/>
         </div>
         
             </Modal>

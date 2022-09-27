@@ -12,7 +12,7 @@ const Header = (props) => {
      <div className='heading'>{props.heading}</div>
      <div className='horizontal-line'/>
      <Button style={{backgroundColor:' #404143',borderColor:' #2d3446',color:'white',marginTop:'12px',marginLeft:'2%'}}><CSVLink data={props.data}>Export</CSVLink></Button>
-     <Button style={{backgroundColor:' #404143',borderColor:' #2d3446',color:'white',marginTop:'12px',marginLeft:'2%'}}>ADD</Button>
+     <Button style={{backgroundColor:' #404143',borderColor:' #2d3446',color:'white',marginTop:'12px',marginLeft:'2%'}}  onClick={()=>{props.onAdd()}}>ADD</Button>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import './mentortable.scss'
 import React from 'react'
 import {useState} from 'react'
-import {Table,Modal} from 'antd'
+import {Table,Modal,Input} from 'antd'
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
@@ -12,10 +12,40 @@ const MentorTable = (props) => {
 
     const [isLoading,SetIsLoading] = useState(false);
     const [add,setAdd] = useState(false);
+    const [edit,setEdit] = useState(false);
+    const [editData,setEditData] = useState([]);
 
     const addModalHandler = () => {
         setAdd(!add);
     }
+
+    const resetEditHandler = () => {
+        setEdit(false);
+        setEditData(null);
+    }
+
+    const editHandler = () => {
+        setEdit(false);
+        setEditData(null);
+    }
+
+    const editModalHandler = (record) => {
+        setEdit(!edit);
+        setEditData(record);
+    }
+
+    const handleDelete =(id) => {
+        Modal.confirm({
+          title:'Are you sure, you want to delete this record',
+          okType:"danger",
+          onOk: ()=>{
+           
+          },
+          cancelText:"No",
+          okText:'Yes'
+        });
+         
+      };
     
     const columns = [
         {
@@ -39,13 +69,18 @@ const MentorTable = (props) => {
             align:'left'
         },
         {
+          title:'Email',
+          dataIndex:'email',
+          align:'left'
+        },
+        {
             title:'Actions',
             dataIndex:'actions',
             align:'center',
             render:(_,record)=>{
                 return<>
-                <AiFillEdit style={{fontSize:'25px',marginRight:'6%'}}/>
-                <AiFillDelete  style={{fontSize:'25px'}}/>
+                <AiFillEdit style={{fontSize:'25px',marginRight:'6%'}} onClick={()=>editModalHandler(record)}/>
+                <AiFillDelete  style={{fontSize:'25px'}} onClick={()=>handleDelete(record)}/>
                 </>
             }
         }
@@ -64,6 +99,50 @@ const MentorTable = (props) => {
          style={{flex:1,minWidth:100}}
          />
             </div>
+
+            <Modal
+            title="Edit Mentor"
+            visible={edit}
+            onCancel={()=>{resetEditHandler();}}
+            onOk={()=>{editHandler()}}
+            okText="Save"
+            style={{width:'100px'}}
+            >
+        <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
+        <label htmlFor="name"  className="label" style={{width:'25%'}}>Name:</label>
+        <Input value={editData?.name} style={{width:'75%'}}onChange={(e) => {
+          setEditData((pre) => {
+            return {...pre,name: e.target.value};
+          })
+        }}/>
+        </div>  
+        <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
+        <label htmlFor="locality"  className="label" style={{width:'25%'}}>Locality:</label>
+        <Input value={editData?.locality} style={{width:'75%'}}onChange={(e) => {
+          setEditData((pre) => {
+            return {...pre,locality: e.target.value};
+          })
+        }}/>
+        </div>
+        <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
+        <label htmlFor="phone_no"  className="label" style={{width:'25%'}}>Phone no:</label>
+        <Input value={editData?.phone_no} style={{width:'75%'}} onChange={(e) => {
+          setEditData((pre) => {
+            return {...pre,phone_no: e.target.value};
+          })
+        }}/>
+        </div>
+        <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
+        <label htmlFor="email"  className="label" style={{width:'25%'}}>Email:</label>
+        <Input value={editData?.email} style={{width:'75%'}} onChange={(e) => {
+          setEditData((pre) => {
+            return {...pre,email: e.target.value};
+          })
+        }}/>
+        </div>
+
+
+            </Modal>
 
         </div>
 
