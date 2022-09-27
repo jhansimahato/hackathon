@@ -25,14 +25,6 @@ const Widget = ({title, link, count, icon}) => {
         <span className="counter">
           {count}
         </span>
-        <span className="link">{link}</span>
-      </div>
-      <div className="right">
-        <div className="percentage positive">
-          <KeyboardArrowUpIcon />
-          {count}%
-        </div>
-        {icon}
       </div>
     </div>
   )

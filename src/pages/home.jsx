@@ -83,6 +83,8 @@ const Home = () => {
     const [week_sess, setweek_sess] = useState(0);
     const [month_sess, setmonth_sess] = useState(0);
     const [tot_att_ct, settot_att_ct] = useState(0);
+    const [tot_sess_ct, settot_sess_ct] = useState(0);
+    const [tot_comp_sess, settot_comp_sess] = useState(0);
 
 
    
@@ -165,11 +167,21 @@ const Home = () => {
 
         useEffect(() => {
             let cnt =0;
+            let sess_ct=0;
+            let comp_sess = 0;
          sessions.map((e)=>{
+            
+            if(new Date(e.data.date.seconds*1000).getTime() <= new Date().getTime())
+            {
             cnt += e.data.attendedCount;
+            sess_ct += e.data.noOfStudents;
+            comp_sess++;
+            }
          })
          console.log(cnt);
         settot_att_ct(cnt);
+        settot_sess_ct(sess_ct);
+        settot_comp_sess(comp_sess);
         }, [sessions]);
         
     return (
@@ -187,18 +199,18 @@ const Home = () => {
                 </div>
 
                 <div className="charts">
-                    <Featured sessionCount={sesscount} desc="Successfully conducted" studentAttendence={(((tot_att_ct)/(sesscount*stcount))*100).toFixed(2)} TodayAttendence="67" WeeklyAttendence="552" MonthlyAttendence="3452" />
+                    <Featured sessionCount={tot_comp_sess} desc="Successfully conducted" studentAttendence={(((tot_att_ct)/(tot_sess_ct))*100).toFixed(2)} TodayAttendence="67" WeeklyAttendence="552" MonthlyAttendence="3452" />
                     <Chart title="Monthly Attendance" aspect={2 / 1}/>
                 </div>
                 <div className="content3">
                     <div className="progression">
                         <div className='title'>Sessions Held</div>
                         { location.map((e) => (
-                            <Progress location={e.data.name} done={`${e.data.sessions}`?(e.data.sessions.length/sesscount)*100:0}/> //done = % of session held at particular location
+                            <Progress location={e.data.name} done={`${e.data.sessions}`?((e.data.sessions.length/tot_comp_sess)*100).toFixed(2):0}/> //done = % of session held at particular location
                         ))};
                     </div>
                     <div className="listSection">
-                    <div className='title'>Top Performer</div>
+                    <div className='title'>Top Performing Volunteers</div>
 
                         { sortvol.map((e,index) => index < 5 && (
                             <List name={e.data.name} location={e.data.location} />
