@@ -199,8 +199,8 @@ const Home = () => {
                 </div>
 
                 <div className="charts">
-                    <Featured sessionCount={tot_comp_sess} desc="Successfully conducted" studentAttendence={(((tot_att_ct)/(tot_sess_ct))*100).toFixed(2)} TodayAttendence="67" WeeklyAttendence="552" MonthlyAttendence="3452" />
-                    <Chart title="Monthly Attendance" aspect={2 / 1}/>
+                    <Featured sessionCount={tot_comp_sess} desc="Successfully conducted" studentAttendence={(((tot_att_ct)/(tot_sess_ct))*100).toFixed(2)} TodayAttendence="1" WeeklyAttendence="3" MonthlyAttendence="5" />
+                    <Chart title="Students Enrolled Monthly" aspect={2 / 1}/>
                 </div>
                 <div className="content3">
                     <div className="progression">

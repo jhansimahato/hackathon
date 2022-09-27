@@ -10,18 +10,18 @@ import {
 } from "recharts";
 
 const data = [
-  { name: "January", Students: 1200 },
-  { name: "February", Students: 2100 },
-  { name: "March", Students: 800 },
-  { name: "April", Students: 1600, Volunteers: 1452 },
-  { name: "May", Students: 900, Volunteers: 632 },
-  { name: "June", Students: 1700, Volunteers: 520 },
-  { name: "July", Students: 1200 , Volunteers: 200},
-  { name: "August", Students: 2100, Volunteers: 630 },
-  { name: "September", Students: 800, Volunteers: 720 },
-  { name: "October", Students: 1600, Volunteers: 1452 },
-  { name: "November", Students: 900, Volunteers: 632 },
-  { name: "December", Students: 1700 },
+  { name: "January", Students: 2 },
+  { name: "February", Students: 2 },
+  { name: "March", Students: 0 },
+  { name: "April", Students: 3},
+  { name: "May", Students: 0},
+  { name: "June", Students: 1 },
+  { name: "July", Students: 0 },
+  { name: "August", Students: 3 },
+  { name: "September", Students: 2 },
+  { name: "October", Students: 0},
+  { name: "November", Students: 1 },
+  { name: "December", Students: 0 },
 ];
 
 const Chart = ({ aspect, title }) => {
