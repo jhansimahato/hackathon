@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Header from '../../components/Header/Header'
 import DonorTable from '../../components/DonorTable/DonorTable';
 import './donor.scss'
 import {Modal,Input} from 'antd';
 import Navbar from '../../components/Navbar/Navbar';
 import { isEmpty } from 'lodash';
 import { auth, db } from "../../context/firebase";
+import DonorHeader from "../../components/DonorHeader/DonorHeader";
 
 const Donor = () => {
   const [add,setAdd] = useState(false);
@@ -202,7 +202,7 @@ const Donor = () => {
     <div className='donor'>
         <div className='donorContainer'>
           <Navbar/>
-            <Header heading="DONORS" data={modifiedData} onAdd={addModalHandler}/>
+            <DonorHeader heading="DONORS" data={modifiedData} onAdd={addModalHandler}/>
             <div className='data-table'>
               <DonorTable data={modifiedData}/>
             </div>

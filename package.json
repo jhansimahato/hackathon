@@ -12,6 +12,7 @@
     "antd": "^4.23.2",
     "firebase": "^9.10.0",
     "lodash": "^4.17.21",
+    "material-ui-dropzone": "^3.5.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-circular-progressbar": "^2.1.0",

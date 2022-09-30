@@ -67,7 +67,7 @@ const AddMentor = () => {
 						   volunteers:[],
                         }).then(()=>
 						{
-							alert("New Mentor has been added with added "+id);
+							alert("New Mentor has been added with id "+id);
 						})
 						
 						

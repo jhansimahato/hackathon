@@ -9,6 +9,7 @@ import { DropzoneDialogBase } from 'material-ui-dropzone';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios'
+import Navbar from "./Navbar/Navbar";
 
 
 //import CancelIcon from '@mui/icons-material/Cancel';
@@ -16,7 +17,7 @@ import axios from 'axios'
 const TrackDonation = () => {
 
     const [msg, setMsg] = useState('');
-const [usere, setUser] = useState({
+    const [usere, setUser] = useState({
     to: "",
 	subject: "Donation Receipt",   
 	discdescription:"Thank you for your generous donation.",   
@@ -139,13 +140,14 @@ const onInputChange = e => {
                                         location : document.getElementById('city').value,
                                         receiptName : new_array_up[0],
                                         receiptUrl : new_array_url[0],
+                                        date: new Date(),
                                     })
                                     db.collection('Donor').doc(donorid).update({
                                         donations:don,
                                      })
                                      usere.attachments = new_array_url[0]
                                      usere.filename = new_array_up[0]
-                                     onSubmit();
+                                    // onSubmit();
                                      
                                 }  
                             })
@@ -166,7 +168,10 @@ const onInputChange = e => {
   return (
     <>
     <main>
-					<div className="mx-5">
+        <Navbar/>
+        <div className="conatiner">
+        <h2 style={{marginTop:'4%'}}>Track Donation</h2>
+        <div className="my-6" style={{marginLeft:'20%',marginTop:'2%'}}>
 						<Form className="my-3">
 						<Form.Group as={Row} className="mb-3 my-2">
                                 <Form.Label column sm={2} style={{ fontSize: 'medium' }}>Donor Name *</Form.Label>
@@ -212,8 +217,8 @@ const onInputChange = e => {
 								</Col>
 							</Form.Group>
 
-                            <Form.Group>
-                                <Form.Label style={{ fontSize: 'medium' }}>Upload Donation Receipt </Form.Label>
+                            <Form.Group as={Row} className="mb-3 my-2">
+                                <Form.Label column sm={3} style={{ fontSize: 'medium' }}>Upload Donation Receipt *</Form.Label>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-3 my-2" controlId="uploadFiles">
 
@@ -241,7 +246,7 @@ const onInputChange = e => {
                            
 							<Button
 								variant="primary"
-								style={{ fontSize: "medium", width: "100px", marginTop: "2%" }}
+								style={{ fontSize: "medium", width: "100px", marginTop: "4%",marginRight:'25%' }}
 								type="submit"
 								onClick={(e) => {
 									e.preventDefault();
@@ -277,6 +282,7 @@ const onInputChange = e => {
                             showFileNamesInPreview={true}
                         />
 					</div>
+                    </div>
 				</main>
     </>
   );
