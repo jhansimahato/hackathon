@@ -31,7 +31,7 @@ const Volunteers = [
 
 const Location = [
     {
-        location: 'location1',
+        location: 'Kolkata',
         held: '50',  // held = % of session held
     },
     {

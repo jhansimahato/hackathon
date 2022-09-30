@@ -1,9 +1,10 @@
 import './donortable.scss'
-import React from 'react'
-import {useState} from 'react'
-import {Table,Modal,Input} from 'antd'
+import React, { useState, useEffect } from "react";
+import {Skeleton,Divider,Table,Modal,Input,List} from 'antd'
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
+import { db } from '../../context/firebase';
+import InfinteScroll from 'react-infinite-scroll-component';
 
 
 
@@ -14,7 +15,29 @@ const DonorTable = (props) => {
     const [add,setAdd] = useState(false);
     const [edit,setEdit] = useState(false);
     const [editData,setEditData] = useState([]);
+    const [viewTransactions,setViewTransactions] = useState(false);
+    const [transc, settransc] = useState([]);
 
+
+    const viewTransactionsHandler = (record) => {
+        db.collection('Donor').where("generatedUid","==",record.generatedUid).get().then((snap)=>{
+        snap.docs.map((doc)=>{
+          settransc(
+            doc.data().donations.map((arr)=>({
+                amount:arr.amount,
+                location:arr.location
+            }))
+          )
+        });
+        })
+        setViewTransactions(true);
+    }
+
+    const closeTransactionHandlerOk = () => {
+      setViewTransactions(false)
+    }
+
+   
     const addModalHandler = () => {
         setAdd(!add);
     }
@@ -30,13 +53,83 @@ const DonorTable = (props) => {
     }
 
     const EditHandler = (record) => {
+        setEdit(false);
+        console.log(editData)
+        db.collection('Donor').doc(editData.generatedUid).update(editData);
+        setEditData(null);
     }
 
+    useEffect(() => {
+      console.log(transc)
+    }, [transc]);
     
+    const data = [
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      },
+      {
+        id:'1',
+        date:'22-08-1999',
+        amount:'20,000'
+      }
+
+    ];
     const columns = [
         {
             title:'Id',
-            dataIndex:'id',
+            dataIndex:'donorId',
             align:'left'
         },
         {
@@ -45,8 +138,8 @@ const DonorTable = (props) => {
             align:'left'
         },
         {
-            title:'Locality',
-            dataIndex:'location',
+            title:'Email',
+            dataIndex:'email',
             align:'left'
         },
         {
@@ -55,8 +148,8 @@ const DonorTable = (props) => {
             align:'left'
         },
         {
-            title:'Donated',
-            dataIndex:'total_donations',
+            title:'Donated Amount',
+            dataIndex:'amount',
             align:'right'
         },
         {
@@ -65,7 +158,7 @@ const DonorTable = (props) => {
             align:'center',
             render:(_,record)=>{
                 return<>
-                <AiFillEye style={{fontSize:'25px',marginRight:'6%'}}/>
+                <AiFillEye style={{fontSize:'25px',marginRight:'6%'}} onClick={()=>viewTransactionsHandler(record)}/>
                 <AiFillEdit style={{fontSize:'25px',marginRight:'6%'}} onClick={()=>editModalHandler(record)}/>
                 </>
             }
@@ -91,7 +184,7 @@ const DonorTable = (props) => {
             onCancel= {()=>{
               resetEditHandler();
             }}
-            onOK={()=>{EditHandler()}}
+            onOk={()=>{EditHandler()}}
             okText="Save"
             style={{width:"100px"}}
             >
@@ -103,14 +196,6 @@ const DonorTable = (props) => {
           })
         }}/>
         </div>
-        <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
-        <label htmlFor="location"  className="label" style={{width:'25%'}}>Locality:</label>
-        <Input value={editData?.location} style={{width:'75%'}}onChange={(e) => {
-          setEditData((pre) => {
-            return {...pre,location: e.target.value};
-          })
-        }}/>
-        </div>
          <div className='textInput' style={{display:'flex',paddingTop:'3%'}}>
         <label htmlFor="mobile"  className="label" style={{width:'25%'}}>Phone no:</label>
         <Input value={editData?.mobile} style={{width:'75%'}} onChange={(e) => {
@@ -119,6 +204,48 @@ const DonorTable = (props) => {
           })
         }}/>
         </div>
+        
+            </Modal>
+            <Modal
+            title="Transactions"
+            visible={viewTransactions}
+            onCancel={()=>{closeTransactionHandlerOk()}}
+            okButtonProps={{ style: { display: 'none' } }}
+            okText="OK"
+            style={{width:"100px"}}
+            >
+                   
+              {/* this will give the transactions details of particular donor to admin */}
+        <InfinteScroll
+       dataLength={transc.length} //this is the length of transaction data 
+       next={transc}
+        size='Small'
+       
+       loader={
+        <Skeleton
+        avatar
+        paragraph={{
+          rows:1,
+        }}
+        active
+        />
+       }
+       endMessage={<Divider plain>End of transaction List</Divider>}>
+        <List
+        itemLayout="horizontal"
+        dataSource={transc} //here the data to be pasted has to be provided
+        renderItem={(item)=>(
+          <List.Item>
+            <List.Item.Meta
+            title={"Amount: " + item.amount}
+            description={"Location: "+ item.location}
+            />
+           
+          </List.Item>
+        )}
+        />
+          </InfinteScroll>
+       
         
             </Modal>
 

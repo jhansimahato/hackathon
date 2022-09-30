@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { auth, db } from "../context/firebase";
+import Navbar from "./Navbar/Navbar";
 
 const AddMentor = () => {
     const form_init = {
@@ -64,7 +65,10 @@ const AddMentor = () => {
                            volunteersOnboarded : 0,
 						   students:[],
 						   volunteers:[],
-                        })
+                        }).then(()=>
+						{
+							alert("New Mentor has been added with added "+id);
+						})
 						
 						
 					setsub(false);
@@ -101,7 +105,10 @@ const AddMentor = () => {
   return (
     <>
     <main>
-					<div className="mx-5">
+		<Navbar/>
+		 <div className="conatiner">
+			<h2 style={{marginTop:'4%'}}>Add Mentor</h2>
+					<div className="my-6" style={{marginLeft:'20%',marginTop:'2%'}}>
 						<Form className="my-3">
 							<Form.Group as={Row} className="mb-3" controlId="name">
 								<Form.Label column sm={2} style={{ fontSize: "medium" }}>
@@ -186,7 +193,7 @@ const AddMentor = () => {
                             </Form.Group>
 							<Button
 								variant="primary"
-								style={{ fontSize: "medium", width: "100px", marginTop: "2%" }}
+								style={{ fontSize: "medium", width: "100px", marginTop: "4%",marginRight:'25%' }}
 								type="submit"
 								onClick={(e) => {
 									e.preventDefault();
@@ -196,6 +203,7 @@ const AddMentor = () => {
 								Submit
 							</Button>
 						</Form>
+					</div>
 					</div>
 				</main>
     </>

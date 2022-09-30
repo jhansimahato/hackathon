@@ -30,7 +30,10 @@ const Navbar = () => {
             <li>Volunteer</li>
           </Link>
           <Link to='/sessions' className='sessions'>
-            <li>sessions</li>
+            <li>Sessions</li>
+          </Link>
+          <Link to='/donors' className='donors'>
+            <li>Donors</li>
           </Link>
         </ul>
         {/* 

@@ -26,7 +26,7 @@ const VolunteerTable = (props) => {
     const editHandler = () => {
         setEdit(false);
         console.log(editData)
-        db.collection('Volunteer').doc(editData.generatedUid).update(editData);
+        //db.collection('Volunteer').doc(editData.generatedUid).update(editData);
         setEditData(null);
     }
 
